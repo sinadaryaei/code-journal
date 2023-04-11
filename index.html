@@ -17,9 +17,61 @@
 </head>
 <body>
   <header>
+
     <div class="container">
+      <div class="row flex-start">
+        <h3 class="code-title">Code Journal</h3>
+      </div>
     </div>
+
   </header>
+  <div class="container">
+    <form id="contact-form">
+
+      <h2>New Entry</h2>
+
+      <div class="row">
+
+        <div class="column-half">
+          <img id="photo-preview" src="images/placeholder-image-square.jpg">
+        </div>
+
+        <div class="column-half">
+
+          <label for="user-Title">Title</label>
+          <input
+          required
+          title="title"
+          type="text"
+          id="user-name"
+          placeholder="">
+
+
+          <label for="user-name">Photo URL</label>
+          <input
+          required
+          name="photo url"
+          type="url"
+          id="user-photo"
+          placeholder="">
+
+        </div>
+      </div>
+      <label for="user-notes">Notes</label>
+
+      <textarea
+      required
+      rows="7"
+      name="notes"
+      id="user-notes"
+      placeholder=""></textarea>
+
+      <div class="form-actions">
+
+        <button type="submit">Send</button>
+      </div>
+    </form>
+  </div>
   <main class="container">
     <div data-view="entry-form"></div>
     <div data-view="entries" class="hidden"></div>
