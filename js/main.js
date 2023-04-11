@@ -4,10 +4,11 @@ const photoPreview = document.querySelector('#photo-preview');
 photoUrlInput.addEventListener('input', function () {
   photoPreview.src = photoUrlInput.value;
 });
-const formElement = document.querySelector('#form-element');
+
+const formElement = document.querySelector('#contact-form');
 
 formElement.addEventListener('submit', function (event) {
-  event.preventDefault();
+  event.target.preventDefault();
 
   const newEntry = {
     photoUrl: formElement.elements['photo-url'].value,
