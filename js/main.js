@@ -2,7 +2,7 @@ const photoUrlInput = document.querySelector('#user-photo');
 const photoPreview = document.querySelector('#photo-preview');
 
 photoUrlInput.addEventListener('input', function () {
-  photoPreview.src = photoUrlInput.value;
+  photoPreview.src = event.target.value;
 });
 
 const formElement = document.querySelector('#contact-form');
