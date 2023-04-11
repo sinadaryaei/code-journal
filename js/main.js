@@ -8,12 +8,11 @@ photoUrlInput.addEventListener('input', function () {
 const formElement = document.querySelector('#contact-form');
 
 formElement.addEventListener('submit', function (event) {
-  event.target.preventDefault();
-
+  event.preventDefault();
   const newEntry = {
-    photoUrl: formElement.elements['photo-url'].value,
-    title: formElement.elements.title.value,
-    notes: formElement.elements.notes.value
+    photoUrl: event.target.elements['photo-url'].value,
+    title: event.target.elements.title.value,
+    notes: event.target.elements.notes.value
   };
 
   newEntry.entryId = data.nextEntryId;
