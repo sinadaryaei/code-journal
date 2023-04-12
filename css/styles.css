@@ -88,3 +88,8 @@ img {
     padding-left: 1rem;
   }
 }
+
+.unorderd-list {
+  list-style: none;
+  display: flex;
+}
