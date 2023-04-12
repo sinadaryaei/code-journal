@@ -93,3 +93,13 @@ img {
   list-style: none;
   display: flex;
 }
+
+.entry-image {
+  width: 100%;
+  height: auto;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
