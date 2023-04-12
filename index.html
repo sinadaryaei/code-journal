@@ -22,7 +22,9 @@
 
     <div class="container">
       <div class="row flex-start">
-        <h3 class="code-title">Code Journal</h3>
+        <div class="column-full">
+          <h3 class="code-title">Code Journal</h3>
+        </div>
       </div>
     </div>
 
@@ -30,16 +32,19 @@
 
   <div class="container">
     <form id="contact-form">
-
-      <h2>New Entry</h2>
+      <div class="row">
+        <div class="column-full">
+          <h2>New Entry</h2>
+        </div>
+      </div>
 
       <div class="row">
 
-        <div class="column-half">
+        <div class="column-half photo-margin-bottom">
           <img id="photo-preview" src="images/placeholder-image-square.jpg" alt="placeholder">
         </div>
 
-        <div class="column-half">
+        <div class="column-half margin-left">
 
           <label for="user-title">Title</label>
           <input
@@ -61,18 +66,20 @@
 
         </div>
       </div>
-      <label for="user-notes">Notes</label>
+      <div class="column-full">
+        <label for="user-notes">Notes</label>
 
-      <textarea
+        <textarea
       required
       rows="7"
       name="notes"
       id="user-notes"
       placeholder=""></textarea>
-
-      <div class="form-actions">
-
-        <button type="submit">Send</button>
+      </div>
+      <div class="form-actions row">
+        <div class="column-full button-flex">
+          <button type="submit">Send</button>
+        </div>
       </div>
     </form>
   </div>
