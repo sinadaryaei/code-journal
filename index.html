@@ -14,12 +14,75 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
+
 </head>
+
 <body>
   <header>
+
     <div class="container">
+      <div class="row flex-start">
+        <div class="column-full">
+          <h3 class="code-title">Code Journal</h3>
+        </div>
+      </div>
     </div>
+
   </header>
+
+  <div class="container">
+    <form id="contact-form">
+      <div class="row">
+        <div class="column-full">
+          <h2>New Entry</h2>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="column-half photo-margin-bottom">
+          <img id="photo-preview" src="images/placeholder-image-square.jpg" alt="placeholder">
+        </div>
+
+        <div class="column-half margin-left">
+
+          <label for="user-title">Title</label>
+          <input
+          required
+          title="title"
+          type="text"
+          name="title"
+          id="user-title"
+          placeholder="">
+
+
+          <label for="user-photo">Photo URL</label>
+          <input
+          required
+          name="photo-url"
+          type="url"
+          id="user-photo"
+          placeholder="">
+
+        </div>
+      </div>
+      <div class="column-full">
+        <label for="user-notes">Notes</label>
+
+        <textarea
+      required
+      rows="7"
+      name="notes"
+      id="user-notes"
+      placeholder=""></textarea>
+      </div>
+      <div class="form-actions row">
+        <div class="column-full button-flex">
+          <button type="submit">Send</button>
+        </div>
+      </div>
+    </form>
+  </div>
   <main class="container">
     <div data-view="entry-form"></div>
     <div data-view="entries" class="hidden"></div>
