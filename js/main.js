@@ -1,6 +1,3 @@
-// querySelector method of the document object is called with on argument the id user-photo
-// is being assigned to the variable photoUrlInput
-
 const photoUrlInput = document.querySelector('#user-photo');
 const photoPreview = document.querySelector('#photo-preview');
 
@@ -28,7 +25,9 @@ formElement.addEventListener('submit', function (event) {
   photoPreview.src = 'images/placeholder-image-square.jpg';
 
   formElement.reset();
+
 });
+
 function renderEntry(entry) {
   const li = document.createElement('li');
 
@@ -58,3 +57,45 @@ function renderEntry(entry) {
   columnHalfText.appendChild(p);
   return li;
 }
+
+function viewSwap(view) {
+  const entryForm = document.querySelector('div[data-view="entry-form"]');
+  const entries = document.querySelector('div[data-view="entries"]');
+
+  if (view === 'entry-form') {
+    entryForm.classList.remove('hidden');
+    entries.classList.add('hidden');
+  } else if (view === 'entries') {
+    entryForm.classList.add('hidden');
+    entries.classList.remove('hidden');
+  }
+  data.view = view;
+}
+document.addEventListener('DOMContentLoaded', function () {
+  const entriesList = document.querySelector('ul');
+
+  for (let i = 0; i < data.entries.length; i++) {
+    const entry = data.entries[i];
+    const entryElement = renderEntry(entry);
+    entriesList.appendChild(entryElement);
+  }
+  toggleNoEntries();
+});
+
+function toggleNoEntries(showMessage) {
+  const noEntriesMessage = document.querySelector('.no-entries');
+  if (data.entries.length > 0) {
+    noEntriesMessage.classList.remove('hidden');
+  } else {
+    noEntriesMessage.classList.add('hidden');
+  }
+}
+const entries = document.querySelector('a');
+entries.addEventListener('click', function () {
+  viewSwap('entries');
+}
+);
+const newButton = document.querySelector('#new-entry');
+newButton.addEventListener('click', function () {
+  viewSwap('entry-form');
+});
