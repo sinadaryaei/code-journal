@@ -26,6 +26,8 @@ formElement.addEventListener('submit', function (event) {
 
   formElement.reset();
 
+  const newSubmit = renderEntry(newEntry);
+  data.enteries.appendChild(newSubmit);
 });
 
 function renderEntry(entry) {
@@ -79,9 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const entryElement = renderEntry(entry);
     entriesList.appendChild(entryElement);
   }
-  toggleNoEntries();
 });
-
 function toggleNoEntries(showMessage) {
   const noEntriesMessage = document.querySelector('.no-entries');
   if (data.entries.length > 0) {
@@ -90,6 +90,8 @@ function toggleNoEntries(showMessage) {
     noEntriesMessage.classList.add('hidden');
   }
 }
+toggleNoEntries();
+
 const entries = document.querySelector('a');
 entries.addEventListener('click', function () {
   viewSwap('entries');
