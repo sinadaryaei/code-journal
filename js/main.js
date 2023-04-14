@@ -1,5 +1,6 @@
 const photoUrlInput = document.querySelector('#user-photo');
 const photoPreview = document.querySelector('#photo-preview');
+const $list = document.querySelector('ul');
 
 photoUrlInput.addEventListener('input', function () {
   photoPreview.src = event.target.value;
@@ -27,7 +28,9 @@ formElement.addEventListener('submit', function (event) {
   formElement.reset();
 
   const newSubmit = renderEntry(newEntry);
-  data.enteries.appendChild(newSubmit);
+  $list.prepend(newSubmit);
+  viewSwap('entries');
+  toggleNoEntries();
 });
 
 function renderEntry(entry) {
@@ -75,22 +78,24 @@ function viewSwap(view) {
 }
 document.addEventListener('DOMContentLoaded', function () {
   const entriesList = document.querySelector('ul');
-
+  if (data.entries.length === 0) {
+    toggleNoEntries();
+    return;
+  }
   for (let i = 0; i < data.entries.length; i++) {
     const entry = data.entries[i];
     const entryElement = renderEntry(entry);
     entriesList.appendChild(entryElement);
   }
 });
-function toggleNoEntries(showMessage) {
+function toggleNoEntries() {
   const noEntriesMessage = document.querySelector('.no-entries');
   if (data.entries.length > 0) {
-    noEntriesMessage.classList.remove('hidden');
-  } else {
     noEntriesMessage.classList.add('hidden');
+  } else {
+    noEntriesMessage.classList.remove('hidden');
   }
 }
-toggleNoEntries();
 
 const entries = document.querySelector('a');
 entries.addEventListener('click', function () {
