@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const entryElement = renderEntry(entry);
     entriesList.appendChild(entryElement);
   }
+  viewSwap(data.view);
 });
 function toggleNoEntries() {
   const noEntriesMessage = document.querySelector('.no-entries');
