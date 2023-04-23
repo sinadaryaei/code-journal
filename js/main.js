@@ -13,13 +13,11 @@ formElement.addEventListener('submit', function (event) {
   const newEntry = {
     photoUrl: event.target.elements['photo-url'].value,
     title: event.target.elements.title.value,
-    notes: event.target.elements.notes.value
+    notes: event.target.elements.notes.value,
+    entryId: data.nextEntryId
   };
 
-  newEntry.entryId = data.nextEntryId;
-
   data.nextEntryId++;
-
   data.entries.unshift(newEntry);
 
   const photoPreview = document.querySelector('#photo-preview');
@@ -35,6 +33,7 @@ formElement.addEventListener('submit', function (event) {
 
 function renderEntry(entry) {
   const li = document.createElement('li');
+  li.dataset.entryId = entry.entryId;
 
   const div = document.createElement('div');
   div.className = 'row';
@@ -54,12 +53,29 @@ function renderEntry(entry) {
   div.appendChild(columnHalfText);
 
   const h2 = document.createElement('h2');
-  h2.textContent = entry.title;
+  const titleSpan = document.createElement('span');
+  titleSpan.textContent = entry.title;
+  const editIcon = document.createElement('i');
+  editIcon.className = 'fas fa-pencil-alt';
+  h2.appendChild(titleSpan);
+  h2.appendChild(editIcon);
   columnHalfText.appendChild(h2);
 
   const p = document.createElement('p');
   p.textContent = entry.notes;
   columnHalfText.appendChild(p);
+
+  editIcon.addEventListener('click', function () {
+    data.editing = data.entries.find(function (e) {
+      return e.entryId === entry.entryId;
+    });
+    document.querySelector('#user-title').value = data.editing.title;
+    document.querySelector('#user-photo').value = data.editing.photoUrl;
+    document.querySelector('#user-notes').value = data.editing.notes;
+    document.querySelector('h2').textContent = 'Edit Entry';
+    viewSwap('entry-form');
+  });
+
   return li;
 }
 

@@ -90,7 +90,6 @@ img {
 }
 
 .unorderd-list {
-  list-style: none;
   display: flex;
 }
 
@@ -118,10 +117,6 @@ button#new-entry {
 button#new-entry:hover {
   background-color: #333;
   color: #fff;
-}
-
-.hidden {
-  display: none;
 }
 
 /* utility class */
