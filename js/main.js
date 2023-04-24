@@ -16,6 +16,18 @@ formElement.addEventListener('submit', function (event) {
     notes: event.target.elements.notes.value,
     entryId: data.nextEntryId
   };
+  if (data.editing) {
+    newEntry.entryId = data.editing.entryId;
+    const index = data.entries.findIndex(e => e.entryId === newEntry.entryId);
+    data.entries[index] = newEntry;
+
+    const updatedEntry = renderEntry(newEntry);
+    const oldEntry = document.querySelector(`li[data-entry-id="${newEntry.entryId}"]`);
+    oldEntry.replaceWith(updatedEntry);
+
+    document.querySelector('h2').textContent = 'New Entry';
+    data.editing = null;
+  }
 
   data.nextEntryId++;
   data.entries.unshift(newEntry);
@@ -30,6 +42,28 @@ formElement.addEventListener('submit', function (event) {
   viewSwap('entries');
   toggleNoEntries();
 });
+function toggleNoEntries() {
+  const noEntriesMessage = document.querySelector('.no-entries');
+  if (data.entries.length > 0) {
+    noEntriesMessage.classList.add('hidden');
+  } else {
+    noEntriesMessage.classList.remove('hidden');
+  }
+}
+
+function viewSwap(view) {
+  const entryForm = document.querySelector('div[data-view="entry-form"]');
+  const entries = document.querySelector('div[data-view="entries"]');
+
+  if (view === 'entry-form') {
+    entryForm.classList.remove('hidden');
+    entries.classList.add('hidden');
+  } else if (view === 'entries') {
+    entryForm.classList.add('hidden');
+    entries.classList.remove('hidden');
+  }
+  data.view = view;
+}
 
 function renderEntry(entry) {
   const li = document.createElement('li');
@@ -53,10 +87,13 @@ function renderEntry(entry) {
   div.appendChild(columnHalfText);
 
   const h2 = document.createElement('h2');
+
   const titleSpan = document.createElement('span');
   titleSpan.textContent = entry.title;
+
   const editIcon = document.createElement('i');
   editIcon.className = 'fas fa-pencil-alt';
+  editIcon.style.display = 'none';
   h2.appendChild(titleSpan);
   h2.appendChild(editIcon);
   columnHalfText.appendChild(h2);
@@ -74,24 +111,13 @@ function renderEntry(entry) {
     document.querySelector('#user-notes').value = data.editing.notes;
     document.querySelector('h2').textContent = 'Edit Entry';
     viewSwap('entry-form');
+
+    deleteButton.classList.remove('hidden');
   });
 
   return li;
 }
 
-function viewSwap(view) {
-  const entryForm = document.querySelector('div[data-view="entry-form"]');
-  const entries = document.querySelector('div[data-view="entries"]');
-
-  if (view === 'entry-form') {
-    entryForm.classList.remove('hidden');
-    entries.classList.add('hidden');
-  } else if (view === 'entries') {
-    entryForm.classList.add('hidden');
-    entries.classList.remove('hidden');
-  }
-  data.view = view;
-}
 document.addEventListener('DOMContentLoaded', function () {
   const entriesList = document.querySelector('ul');
   if (data.entries.length === 0) {
@@ -105,21 +131,56 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   viewSwap(data.view);
 });
-function toggleNoEntries() {
-  const noEntriesMessage = document.querySelector('.no-entries');
-  if (data.entries.length > 0) {
-    noEntriesMessage.classList.add('hidden');
-  } else {
-    noEntriesMessage.classList.remove('hidden');
-  }
-}
 
 const entries = document.querySelector('a');
 entries.addEventListener('click', function () {
   viewSwap('entries');
-}
-);
+});
+
 const newButton = document.querySelector('#new-entry');
 newButton.addEventListener('click', function () {
   viewSwap('entry-form');
+});
+
+const deleteButton = document.querySelector('#delete-entry');
+deleteButton.addEventListener('click', function () {
+  showModal();
+});
+
+function showModal() {
+  const modal = document.querySelector('#confirmation-modal');
+  modal.classList.remove('hidden');
+}
+
+function hideModal() {
+  const modal = document.querySelector('#confirmation-modal');
+  modal.classList.add('hidden');
+}
+
+function deleteEntry(entryId) {
+  const index = data.entries.findIndex(e => e.entryId === entryId);
+  if (index !== -1) {
+    data.entries.splice(index, 1);
+
+    const entryElement = document.querySelector(`li[data-entry-id="${entryId}"]`);
+    entryElement.remove();
+
+    toggleNoEntries();
+  }
+}
+
+const cancelButton = document.querySelector('#cancel');
+cancelButton.addEventListener('click', function () {
+  hideModal();
+});
+
+const confirmButton = document.querySelector('#confirm');
+confirmButton.addEventListener('click', function () {
+  if (data.editing) {
+    deleteEntry(data.editing.entryId);
+    data.editing = null;
+    document.querySelector('h2').textContent = 'New Entry';
+    hideModal();
+    viewSwap('entries');
+  }
 });

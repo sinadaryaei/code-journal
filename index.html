@@ -48,7 +48,7 @@
 
           <div class="column-half margin-left">
 
-            <label for="user-title">Title</label>
+            <label for="user">Title</label>
             <input
             required
             title="title"
@@ -80,25 +80,32 @@
         </div>
         <div class="form-actions row">
           <div class="column-full button-flex">
-            <button type="submit">SAVE</button>
+            <button id="delete-entry" class="hidden">DELETE ENTRY</button>
+            <div class="column-full button-flex">
+              <button type="submit">SAVE</button>
+            </div>
           </div>
         </div>
       </form>
     </div>
 
     <div data-view="entries" class="hidden">
-      <div class="no-entries hidden">No Entries</div>
       <div class="row column-full space-between align-center">
         <h2>Entries</h2>
         <button id="new-entry">NEW</button>
       </div>
+      <div class="no-entries hidden">No new entries have been recorded.</div>
 
       <ul class="column-full">
       </ul>
     </div>
-
-
-
+    <div id="confirmation-modal" class="modal hidden">
+      <div class="modal-content">
+        <h3>Are you sure you want to delete this entry?</h3>
+        <button id="cancel">CANCEL</button>
+        <button id="confirm">CONFIRM</button>
+      </div>
+    </div>
 
   </main>
   <script src="js/data.js"></script>
