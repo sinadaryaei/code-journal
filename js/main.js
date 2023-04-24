@@ -93,7 +93,6 @@ function renderEntry(entry) {
 
   const editIcon = document.createElement('i');
   editIcon.className = 'fas fa-pencil-alt';
-  editIcon.style.display = 'none';
   h2.appendChild(titleSpan);
   h2.appendChild(editIcon);
   columnHalfText.appendChild(h2);
