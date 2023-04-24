@@ -10,6 +10,7 @@ const formElement = document.querySelector('#contact-form');
 
 formElement.addEventListener('submit', function (event) {
   event.preventDefault();
+
   const newEntry = {
     photoUrl: event.target.elements['photo-url'].value,
     title: event.target.elements.title.value,
@@ -18,46 +19,55 @@ formElement.addEventListener('submit', function (event) {
   };
   if (data.editing) {
     newEntry.entryId = data.editing.entryId;
+
     const index = data.entries.findIndex(e => e.entryId === newEntry.entryId);
     data.entries[index] = newEntry;
 
     const updatedEntry = renderEntry(newEntry);
+
     const oldEntry = document.querySelector(`li[data-entry-id="${newEntry.entryId}"]`);
     oldEntry.replaceWith(updatedEntry);
 
     document.querySelector('h2').textContent = 'New Entry';
     data.editing = null;
+  } else {
+    data.nextEntryId++;
+    data.entries.unshift(newEntry);
+    const photoPreview = document.querySelector('#photo-preview');
+    photoPreview.src = 'images/placeholder-image-square.jpg';
+
+    formElement.reset();
+
+    const newSubmit = renderEntry(newEntry);
+    $list.prepend(newSubmit);
+    viewSwap('entries');
+    toggleNoEntries();
   }
 
-  data.nextEntryId++;
-  data.entries.unshift(newEntry);
-
-  const photoPreview = document.querySelector('#photo-preview');
-  photoPreview.src = 'images/placeholder-image-square.jpg';
-
-  formElement.reset();
-
-  const newSubmit = renderEntry(newEntry);
-  $list.prepend(newSubmit);
-  viewSwap('entries');
-  toggleNoEntries();
 });
+
 function toggleNoEntries() {
+
   const noEntriesMessage = document.querySelector('.no-entries');
+
   if (data.entries.length > 0) {
     noEntriesMessage.classList.add('hidden');
+
   } else {
     noEntriesMessage.classList.remove('hidden');
   }
 }
 
 function viewSwap(view) {
+
   const entryForm = document.querySelector('div[data-view="entry-form"]');
+
   const entries = document.querySelector('div[data-view="entries"]');
 
   if (view === 'entry-form') {
     entryForm.classList.remove('hidden');
     entries.classList.add('hidden');
+
   } else if (view === 'entries') {
     entryForm.classList.add('hidden');
     entries.classList.remove('hidden');
@@ -66,6 +76,7 @@ function viewSwap(view) {
 }
 
 function renderEntry(entry) {
+
   const li = document.createElement('li');
   li.dataset.entryId = entry.entryId;
 
@@ -118,11 +129,14 @@ function renderEntry(entry) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+
   const entriesList = document.querySelector('ul');
+
   if (data.entries.length === 0) {
     toggleNoEntries();
     return;
   }
+
   for (let i = 0; i < data.entries.length; i++) {
     const entry = data.entries[i];
     const entryElement = renderEntry(entry);
@@ -147,17 +161,21 @@ deleteButton.addEventListener('click', function () {
 });
 
 function showModal() {
+
   const modal = document.querySelector('#confirmation-modal');
   modal.classList.remove('hidden');
 }
 
 function hideModal() {
+
   const modal = document.querySelector('#confirmation-modal');
   modal.classList.add('hidden');
 }
 
 function deleteEntry(entryId) {
+
   const index = data.entries.findIndex(e => e.entryId === entryId);
+
   if (index !== -1) {
     data.entries.splice(index, 1);
 
