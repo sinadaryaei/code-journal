@@ -36,8 +36,6 @@ formElement.addEventListener('submit', function (event) {
     const photoPreview = document.querySelector('#photo-preview');
     photoPreview.src = 'images/placeholder-image-square.jpg';
 
-    formElement.reset();
-
     const newSubmit = renderEntry(newEntry);
     $list.prepend(newSubmit);
     toggleNoEntries();
@@ -138,14 +136,16 @@ entries.addEventListener('click', function () {
 const newButton = document.querySelector('#new-entry');
 newButton.addEventListener('click', function () {
   viewSwap('entry-form');
+  formElement.reset();
+
 });
 function toggleNoEntries() {
 
   const noEntriesMessage = document.querySelector('.no-entries');
 
   if (data.entries.length > 0) {
-    noEntriesMessage.classList.add('hidden');
 
+    noEntriesMessage.classList.add('hidden');
   } else {
     noEntriesMessage.classList.remove('hidden');
   }
