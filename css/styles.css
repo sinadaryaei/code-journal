@@ -90,7 +90,6 @@ img {
 }
 
 .unorderd-list {
-  list-style: none;
   display: flex;
 }
 
@@ -120,10 +119,6 @@ button#new-entry:hover {
   color: #fff;
 }
 
-.hidden {
-  display: none;
-}
-
 /* utility class */
 .space-between {
   justify-content: space-between;
@@ -142,4 +137,29 @@ a {
   color: white;
   margin-left: 1rem;
   text-decoration: none;
+}
+
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 1rem;
+  border: 1px solid #888;
+  width: 50%;
+  text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+  .modal-content {
+    width: 90%;
+  }
 }
