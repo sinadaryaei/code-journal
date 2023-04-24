@@ -10,14 +10,13 @@ const formElement = document.querySelector('#contact-form');
 
 formElement.addEventListener('submit', function (event) {
   event.preventDefault();
-
   const newEntry = {
     photoUrl: event.target.elements['photo-url'].value,
     title: event.target.elements.title.value,
     notes: event.target.elements.notes.value,
     entryId: data.nextEntryId
   };
-  if (data.editing) {
+  if (data.editing !== null) {
     newEntry.entryId = data.editing.entryId;
 
     const index = data.entries.findIndex(e => e.entryId === newEntry.entryId);
@@ -29,6 +28,7 @@ formElement.addEventListener('submit', function (event) {
     oldEntry.replaceWith(updatedEntry);
 
     document.querySelector('h2').textContent = 'New Entry';
+    formElement.reset();
     data.editing = null;
   } else {
     data.nextEntryId++;
@@ -40,9 +40,9 @@ formElement.addEventListener('submit', function (event) {
 
     const newSubmit = renderEntry(newEntry);
     $list.prepend(newSubmit);
-    viewSwap('entries');
+    toggleNoEntries();
   }
-
+  viewSwap('entries');
 });
 
 function viewSwap(view) {
@@ -119,8 +119,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const entriesList = document.querySelector('ul');
 
   if (data.entries.length === 0) {
-    // eslint-disable-next-line no-undef
-    toggleNoEntries();
     return;
   }
 
@@ -141,3 +139,14 @@ const newButton = document.querySelector('#new-entry');
 newButton.addEventListener('click', function () {
   viewSwap('entry-form');
 });
+function toggleNoEntries() {
+
+  const noEntriesMessage = document.querySelector('.no-entries');
+
+  if (data.entries.length > 0) {
+    noEntriesMessage.classList.add('hidden');
+
+  } else {
+    noEntriesMessage.classList.remove('hidden');
+  }
+}
