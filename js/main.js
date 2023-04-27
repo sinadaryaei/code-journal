@@ -161,3 +161,7 @@ $list.addEventListener('click', function (event) {
     }
   }
 });
+const deleteEntryButton = document.getElementById('delete-entry');
+deleteEntryButton.addEventListener('click', function () {
+  document.getElementById('confirmation-modal').classList.remove('hidden');
+});
