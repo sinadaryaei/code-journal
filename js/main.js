@@ -13,28 +13,57 @@ formElement.addEventListener('submit', function (event) {
   const newEntry = {
     photoUrl: event.target.elements['photo-url'].value,
     title: event.target.elements.title.value,
-    notes: event.target.elements.notes.value
+    notes: event.target.elements.notes.value,
+    entryId: data.nextEntryId
   };
+  if (data.editing !== null) {
+    newEntry.entryId = data.editing.entryId;
 
-  newEntry.entryId = data.nextEntryId;
+    const index = data.entries.findIndex(e => e.entryId === newEntry.entryId);
+    data.entries[index] = newEntry;
 
-  data.nextEntryId++;
+    const updatedEntry = renderEntry(newEntry);
 
-  data.entries.unshift(newEntry);
+    const oldEntry = document.querySelector('li[data-entry-id="' + newEntry.entryId + '"]');
+    oldEntry.replaceWith(updatedEntry);
 
-  const photoPreview = document.querySelector('#photo-preview');
-  photoPreview.src = 'images/placeholder-image-square.jpg';
+    document.querySelector('h2').textContent = 'New Entry';
+    formElement.reset();
+    data.editing = null;
+  } else {
+    data.nextEntryId++;
+    data.entries.unshift(newEntry);
+    const photoPreview = document.querySelector('#photo-preview');
+    photoPreview.src = 'images/placeholder-image-square.jpg';
 
-  formElement.reset();
-
-  const newSubmit = renderEntry(newEntry);
-  $list.prepend(newSubmit);
+    const newSubmit = renderEntry(newEntry);
+    $list.prepend(newSubmit);
+    toggleNoEntries();
+  }
   viewSwap('entries');
-  toggleNoEntries();
 });
 
+function viewSwap(view) {
+
+  const entryForm = document.querySelector('div[data-view="entry-form"]');
+
+  const entries = document.querySelector('div[data-view="entries"]');
+
+  if (view === 'entry-form') {
+    entryForm.classList.remove('hidden');
+    entries.classList.add('hidden');
+
+  } else if (view === 'entries') {
+    entryForm.classList.add('hidden');
+    entries.classList.remove('hidden');
+  }
+  data.view = view;
+}
+
 function renderEntry(entry) {
+
   const li = document.createElement('li');
+  li.dataset.entryId = entry.entryId;
 
   const div = document.createElement('div');
   div.className = 'row';
@@ -54,7 +83,14 @@ function renderEntry(entry) {
   div.appendChild(columnHalfText);
 
   const h2 = document.createElement('h2');
-  h2.textContent = entry.title;
+
+  const titleSpan = document.createElement('span');
+  titleSpan.textContent = entry.title;
+
+  const editIcon = document.createElement('i');
+  editIcon.className = 'fas fa-pencil-alt';
+  h2.appendChild(titleSpan);
+  h2.appendChild(editIcon);
   columnHalfText.appendChild(h2);
 
   const p = document.createElement('p');
@@ -63,47 +99,65 @@ function renderEntry(entry) {
   return li;
 }
 
-function viewSwap(view) {
-  const entryForm = document.querySelector('div[data-view="entry-form"]');
-  const entries = document.querySelector('div[data-view="entries"]');
-
-  if (view === 'entry-form') {
-    entryForm.classList.remove('hidden');
-    entries.classList.add('hidden');
-  } else if (view === 'entries') {
-    entryForm.classList.add('hidden');
-    entries.classList.remove('hidden');
-  }
-  data.view = view;
-}
 document.addEventListener('DOMContentLoaded', function () {
+
   const entriesList = document.querySelector('ul');
+
   if (data.entries.length === 0) {
-    toggleNoEntries();
     return;
   }
+
   for (let i = 0; i < data.entries.length; i++) {
     const entry = data.entries[i];
     const entryElement = renderEntry(entry);
     entriesList.appendChild(entryElement);
   }
   viewSwap(data.view);
+  toggleNoEntries();
+
+});
+
+const entries = document.querySelector('a');
+entries.addEventListener('click', function () {
+  viewSwap('entries');
+});
+
+const newButton = document.querySelector('#new-entry');
+newButton.addEventListener('click', function () {
+  viewSwap('entry-form');
+  formElement.reset();
+
 });
 function toggleNoEntries() {
+
   const noEntriesMessage = document.querySelector('.no-entries');
+
   if (data.entries.length > 0) {
+
     noEntriesMessage.classList.add('hidden');
   } else {
     noEntriesMessage.classList.remove('hidden');
   }
 }
+$list.addEventListener('click', function (event) {
+  if (event.target.tagName === 'I' && event.target.classList.contains('fa-pencil-alt')) {
 
-const entries = document.querySelector('a');
-entries.addEventListener('click', function () {
-  viewSwap('entries');
-}
-);
-const newButton = document.querySelector('#new-entry');
-newButton.addEventListener('click', function () {
-  viewSwap('entry-form');
+    const parentLi = event.target.closest('li[data-entry-id]');
+    if (parentLi) {
+
+      const entryId = parseInt(parentLi.dataset.entryId, 10);
+
+      data.editing = data.entries.find(function (e) {
+        return e.entryId === entryId;
+      });
+
+      document.querySelector('#user-title').value = data.editing.title;
+      document.querySelector('#user-photo').value = data.editing.photoUrl;
+      document.querySelector('#user-notes').value = data.editing.notes;
+
+      document.querySelector('h2').textContent = 'Edit Entry';
+
+      viewSwap('entry-form');
+    }
+  }
 });
