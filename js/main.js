@@ -24,7 +24,7 @@ formElement.addEventListener('submit', function (event) {
 
     const updatedEntry = renderEntry(newEntry);
 
-    const oldEntry = document.querySelector(`li[data-entry-id="${newEntry.entryId}"]`);
+    const oldEntry = document.querySelector('li[data-entry-id="' + newEntry.entryId + '"]');
     oldEntry.replaceWith(updatedEntry);
 
     document.querySelector('h2').textContent = 'New Entry';
@@ -96,21 +96,9 @@ function renderEntry(entry) {
   const p = document.createElement('p');
   p.textContent = entry.notes;
   columnHalfText.appendChild(p);
-
-  editIcon.addEventListener('click', function () {
-    data.editing = data.entries.find(function (e) {
-      return e.entryId === entry.entryId;
-    });
-    document.querySelector('#user-title').value = data.editing.title;
-    document.querySelector('#user-photo').value = data.editing.photoUrl;
-    document.querySelector('#user-notes').value = data.editing.notes;
-    document.querySelector('h2').textContent = 'Edit Entry';
-    viewSwap('entry-form');
-
-  });
-
   return li;
 }
+toggleNoEntries();
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -126,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
     entriesList.appendChild(entryElement);
   }
   viewSwap(data.view);
+
 });
 
 const entries = document.querySelector('a');
@@ -150,3 +139,25 @@ function toggleNoEntries() {
     noEntriesMessage.classList.remove('hidden');
   }
 }
+$list.addEventListener('click', function (event) {
+  if (event.target.tagName === 'I' && event.target.classList.contains('fa-pencil-alt')) {
+
+    const parentLi = event.target.closest('li[data-entry-id]');
+    if (parentLi) {
+
+      const entryId = parseInt(parentLi.dataset.entryId, 10);
+
+      data.editing = data.entries.find(function (e) {
+        return e.entryId === entryId;
+      });
+
+      document.querySelector('#user-title').value = data.editing.title;
+      document.querySelector('#user-photo').value = data.editing.photoUrl;
+      document.querySelector('#user-notes').value = data.editing.notes;
+
+      document.querySelector('h2').textContent = 'Edit Entry';
+
+      viewSwap('entry-form');
+    }
+  }
+});
