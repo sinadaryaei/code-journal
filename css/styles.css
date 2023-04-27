@@ -50,6 +50,7 @@ button {
   background-color: rgb(150 66 233);
   cursor: pointer;
   transition: background-color 0.15s ease;
+  height: min-content;
 }
 
 button:hover {
@@ -203,4 +204,17 @@ span {
 .cancel-button:hover {
   background-color: #8a8a8a;
   color: white;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#delete-entry {
+  background-color: transparent;
+  color: red;
+  text-decoration: underline;
+  cursor: pointer;
 }

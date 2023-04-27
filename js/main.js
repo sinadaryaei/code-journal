@@ -165,3 +165,9 @@ const deleteEntryButton = document.getElementById('delete-entry');
 deleteEntryButton.addEventListener('click', function () {
   document.getElementById('confirmation-modal').classList.remove('hidden');
 });
+const cancelButton = document.getElementById('cancel');
+const modal = document.getElementById('confirmation-modal');
+
+cancelButton.addEventListener('click', () => {
+  modal.classList.add('hidden');
+});
