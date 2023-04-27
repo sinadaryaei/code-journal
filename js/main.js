@@ -126,7 +126,7 @@ const newButton = document.querySelector('#new-entry');
 newButton.addEventListener('click', function () {
   viewSwap('entry-form');
   formElement.reset();
-
+  document.getElementById('delete-entry').classList.add('hidden');
 });
 function toggleNoEntries() {
 
@@ -156,7 +156,7 @@ $list.addEventListener('click', function (event) {
       document.querySelector('#user-notes').value = data.editing.notes;
 
       document.querySelector('h2').textContent = 'Edit Entry';
-
+      document.getElementById('delete-entry').classList.remove('hidden');
       viewSwap('entry-form');
     }
   }
