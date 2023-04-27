@@ -165,9 +165,24 @@ const deleteEntryButton = document.getElementById('delete-entry');
 deleteEntryButton.addEventListener('click', function () {
   document.getElementById('confirmation-modal').classList.remove('hidden');
 });
+
 const cancelButton = document.getElementById('cancel');
 const modal = document.getElementById('confirmation-modal');
 
 cancelButton.addEventListener('click', () => {
   modal.classList.add('hidden');
+});
+
+const confirmButton = document.getElementById('confirm');
+
+confirmButton.addEventListener('click', () => {
+  const index = data.entries.findIndex(e => e.entryId === data.editing.entryId);
+  data.entries.splice(index, 1);
+
+  const entryLi = document.querySelector(`li[data-entry-id="${data.editing.entryId}"]`);
+  entryLi.remove();
+
+  toggleNoEntries();
+  modal.classList.add('hidden');
+  viewSwap('entries');
 });
