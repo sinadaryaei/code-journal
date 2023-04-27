@@ -98,7 +98,6 @@ function renderEntry(entry) {
   columnHalfText.appendChild(p);
   return li;
 }
-toggleNoEntries();
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -114,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
     entriesList.appendChild(entryElement);
   }
   viewSwap(data.view);
+  toggleNoEntries();
 
 });
 
