@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
 const entries = document.querySelector('a');
 entries.addEventListener('click', function () {
   viewSwap('entries');
+  toggleNoEntries();
 });
 
 const newButton = document.querySelector('#new-entry');
