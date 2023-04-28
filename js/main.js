@@ -120,13 +120,15 @@ document.addEventListener('DOMContentLoaded', function () {
 const entries = document.querySelector('a');
 entries.addEventListener('click', function () {
   viewSwap('entries');
+  toggleNoEntries();
 });
 
 const newButton = document.querySelector('#new-entry');
 newButton.addEventListener('click', function () {
   viewSwap('entry-form');
   formElement.reset();
-
+  document.getElementById('delete-entry').classList.add('hidden');
+  data.editing = null;
 });
 function toggleNoEntries() {
 
@@ -156,8 +158,33 @@ $list.addEventListener('click', function (event) {
       document.querySelector('#user-notes').value = data.editing.notes;
 
       document.querySelector('h2').textContent = 'Edit Entry';
-
+      document.getElementById('delete-entry').classList.remove('hidden');
       viewSwap('entry-form');
     }
   }
+});
+const deleteEntryButton = document.getElementById('delete-entry');
+deleteEntryButton.addEventListener('click', function () {
+  document.getElementById('confirmation-modal').classList.remove('hidden');
+});
+
+const cancelButton = document.getElementById('cancel');
+const modal = document.getElementById('confirmation-modal');
+
+cancelButton.addEventListener('click', () => {
+  modal.classList.add('hidden');
+});
+
+const confirmButton = document.getElementById('confirm');
+
+confirmButton.addEventListener('click', () => {
+  const index = data.entries.findIndex(e => e.entryId === data.editing.entryId);
+  data.entries.splice(index, 1);
+
+  const entryLi = document.querySelector(`li[data-entry-id="${data.editing.entryId}"]`);
+  entryLi.remove();
+
+  viewSwap('entries');
+  toggleNoEntries();
+  modal.classList.add('hidden');
 });

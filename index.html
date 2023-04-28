@@ -79,11 +79,9 @@
           placeholder=""></textarea>
         </div>
         <div class="form-actions row">
-          <div class="column-full button-flex">
-            <button id="delete-entry" class="hidden">DELETE ENTRY</button>
-            <div class="column-full button-flex">
-              <button type="submit">SAVE</button>
-            </div>
+          <div class="column-full button-container">
+            <button type="button" id="delete-entry" class="hidden">DELETE ENTRY</button>
+            <button type="submit">SAVE</button>
           </div>
         </div>
       </form>
@@ -91,20 +89,20 @@
 
     <div data-view="entries" class="hidden">
       <div class="row column-full space-between align-center">
-        <h2>Entries</h2>
+        <h2 class="entries-title">Entries</h2>
         <button id="new-entry">NEW</button>
-        <div class="no-entries hidden">No new entries have been recorded.
+        <div class="no-entries hidden center-text">No new entries have been recorded.
         </div>
       </div>
-
       <ul class="column-full">
       </ul>
     </div>
+
     <div id="confirmation-modal" class="modal hidden">
       <div class="modal-content">
         <h3>Are you sure you want to delete this entry?</h3>
-        <button id="cancel">CANCEL</button>
-        <button id="confirm">CONFIRM</button>
+        <button id="cancel" class="cancel-button">CANCEL</button>
+        <button id="confirm" class="red-button">CONFIRM</button>
       </div>
     </div>
 

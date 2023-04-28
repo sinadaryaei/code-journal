@@ -50,6 +50,7 @@ button {
   background-color: rgb(150 66 233);
   cursor: pointer;
   transition: background-color 0.15s ease;
+  height: min-content;
 }
 
 button:hover {
@@ -122,6 +123,7 @@ button#new-entry:hover {
 /* utility class */
 .space-between {
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .align-center {
@@ -147,15 +149,21 @@ a {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-content {
+  position: absolute;
+  top: 10%;
   background-color: white;
   margin: 15% auto;
   padding: 1rem;
   border: 1px solid #888;
   width: 50%;
   text-align: center;
+  border-radius: 4px;
 }
 
 @media screen and (max-width: 600px) {
@@ -176,4 +184,49 @@ h2 {
 
 span {
   color: black;
+}
+
+.hidden {
+  display: none;
+}
+
+.red-button {
+  background-color: red !important;
+}
+
+.red-button:hover {
+  background-color: darkred !important;
+  color: white;
+}
+
+.cancel-button {
+  background-color: #b6b6b6;
+  color: black;
+}
+
+.cancel-button:hover {
+  background-color: #8a8a8a;
+  color: white;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#delete-entry {
+  background-color: transparent;
+  color: red;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.entries-title {
+  min-width: 150px;
+}
+
+.center-text {
+  text-align: center;
+  width: 100%;
 }
