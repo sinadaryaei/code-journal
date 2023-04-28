@@ -127,6 +127,7 @@ newButton.addEventListener('click', function () {
   viewSwap('entry-form');
   formElement.reset();
   document.getElementById('delete-entry').classList.add('hidden');
+  data.editing = null;
 });
 function toggleNoEntries() {
 
@@ -182,7 +183,7 @@ confirmButton.addEventListener('click', () => {
   const entryLi = document.querySelector(`li[data-entry-id="${data.editing.entryId}"]`);
   entryLi.remove();
 
+  viewSwap('entries');
   toggleNoEntries();
   modal.classList.add('hidden');
-  viewSwap('entries');
 });
